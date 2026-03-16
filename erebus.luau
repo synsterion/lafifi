@@ -584,32 +584,9 @@ Farm_AutoRaid = FarmGroupbox:CreateToggle({
 					local FoundRaidBoss = FindRaidBoss()
 
 					if FoundRaidBoss then
-						local VoidStart = nil
-						local LastSkill = tick()
-						local Voided = false
-
 						repeat task.wait()
 							if FoundRaidBoss and FoundRaidBoss:FindFirstChild("Humanoid") then
-								local BossHumanoid = FoundRaidBoss.Humanoid
-								
-								if not VoidStart then
-									local IFrame = FoundRaidBoss:FindFirstChild("IFrame")
-									if IFrame and IFrame:IsA("Folder") then
-										VoidStart = tick()
-									end
-								end
-								
-								if VoidStart and not Voided and tick() - VoidStart > 20 then
-									NearestMob = false
-									Voided = true
-									task.wait(0.5)
-
-									Skill:FireServer("V", true)
-									task.wait(1.5)
-
-									Voiding = true
-								end
-
+								local BossHumanoid = FoundRaidBoss:FindFirstChild("Humanoid")
 								if Voiding then
 									NearestMob = false
 									HumanoidRootPart.CFrame = CFrame.new(0, -477, 0)
@@ -629,13 +606,13 @@ Farm_AutoRaid = FarmGroupbox:CreateToggle({
 					elseif FoundMob then
 						repeat task.wait()
 							if FoundMob then
-									if FoundMob.Humanoid.Health > 0 or GetDistance(FoundMob:GetPivot() * AttackMode, HumanoidRootPart) < 20 then
-										NearestMob = true
-									elseif not FoundMob or FoundMob.Humanoid.Health <= 0 or GetDistance(FoundMob:GetPivot() * AttackMode, HumanoidRootPart) > 20 then
-										NearestMob = false
-									end
+								if FoundMob.Humanoid.Health > 0 or GetDistance(FoundMob:GetPivot() * AttackMode, HumanoidRootPart) < 20 then
+									NearestMob = true
+								elseif not FoundMob or FoundMob.Humanoid.Health <= 0 or GetDistance(FoundMob:GetPivot() * AttackMode, HumanoidRootPart) > 20 then
+									NearestMob = false
+								end
 
-									HumanoidRootPart.CFrame = FoundMob:GetPivot() * AttackMode
+								HumanoidRootPart.CFrame = FoundMob:GetPivot() * AttackMode
 							end
 						until not AutoRaid or not FoundMob or not FoundMob.Parent or not FoundMob:IsDescendantOf(workspace) or FoundMob.Humanoid.Health <= 0 or Humanoid.Health <= 0
 						RaidFall:Destroy()
@@ -787,6 +764,37 @@ Settings_VoidRaid = SettingsGroupbox:CreateToggle({
 	Style = 2,
 	Callback = function(Value)
 		VoidRaid = Value
+		while VoidRaid do task.wait()
+			local FoundRaidBoss = FindRaidBoss()
+			local VoidStart = nil
+			local LastSkill = tick()
+			local Voided = false
+
+			if FoundRaidBoss and FoundRaidBoss:FindFirstChild("Humanoid") then
+				local BossHumanoid = FoundRaidBoss.Humanoid
+				local VoidStart = nil
+				local LastSkill = tick()
+				local Voided = false
+
+				if not VoidStart then
+					local IFrame = FoundRaidBoss:FindFirstChild("IFrame")
+					if IFrame and IFrame:IsA("Folder") then
+						VoidStart = tick()
+					end
+				end
+
+				if VoidStart and not Voided and tick() - VoidStart > 15 then
+					NearestMob = false
+					Voided = true
+					task.wait(0.5)
+
+					Skill:FireServer("V", true)
+					task.wait(2)
+
+					Voiding = true
+				end
+			end
+		end
 	end,
 }, "Settings_VoidRaid")
 
