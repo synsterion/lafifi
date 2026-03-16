@@ -589,12 +589,6 @@ Farm_AutoRaid = FarmGroupbox:CreateToggle({
 					local FoundRaidBoss = FindRaidBoss()
 
 					if FoundRaidBoss then
-						local VoidStart = nil
-						local LastSkill = tick()
-						local Voided = false
-						local Voiding = false
-						local DoingSkill = false
-
 						repeat task.wait()
 							if FoundRaidBoss and FoundRaidBoss:FindFirstChild("Humanoid") then
 								local BossHumanoid = FoundRaidBoss.Humanoid
@@ -787,7 +781,6 @@ Settings_VoidRaid = SettingsGroupbox:CreateToggle({
 					if FoundRaidBoss and FoundRaidBoss:FindFirstChild("Humanoid") then
 						local BossHumanoid = FoundRaidBoss.Humanoid
 
-						if VoidRaid then
 							if not VoidStart then
 								local IFrame = FoundRaidBoss:FindFirstChild("IFrame")
 								if IFrame and IFrame:IsA("Folder") then
@@ -808,7 +801,6 @@ Settings_VoidRaid = SettingsGroupbox:CreateToggle({
 
 								Voiding = true
 							end
-						end
 					end
 				until not VoidRaid or not FoundRaidBoss or not FoundRaidBoss.Parent or not FoundRaidBoss:IsDescendantOf(workspace) or FoundRaidBoss.Humanoid.Health <= 0 or Humanoid.Health <= 0
 
