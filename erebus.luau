@@ -801,10 +801,8 @@ Settings_VoidRaid = SettingsGroupbox:CreateToggle({
 								Voided = true
 								task.wait(0.5)
 
-								HumanoidRootPart.CFrame = FoundRaidBoss:GetPivot() * CFrame.new(0,0,7)
 								Skill:FireServer("X", true)
 								task.wait(2)
-								HumanoidRootPart.CFrame = FoundRaidBoss:GetPivot() * CFrame.new(0,0,7)
 								Skill:FireServer("X", true)
 								task.wait(1)
 
