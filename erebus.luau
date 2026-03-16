@@ -598,7 +598,7 @@ Farm_AutoRaid = FarmGroupbox:CreateToggle({
 										HumanoidRootPart.CFrame = CFrame.new(0, -477, 0)
 									elseif DoingSkill then
 										NearestMob = false
-										HumanoidRootPart.CFrame = FoundRaidBoss:GetPivot() * CFrame.new(0, 0, 7)
+										HumanoidRootPart.CFrame = FoundRaidBoss:GetPivot() * CFrame.new(0, 0, 5)
 									else
 										if BossHumanoid.Health > 0 or GetDistance(FoundRaidBoss:GetPivot() * AttackMode, HumanoidRootPart) < 20 then
 											NearestMob = true
@@ -777,12 +777,13 @@ Settings_VoidRaid = SettingsGroupbox:CreateToggle({
 	Callback = function(Value)
 		VoidRaid = Value
 		task.spawn(function()
-			while VoidRaid do task.wait()
+			while VoidRaid do task.wait(0.1)
 				local FoundRaidBoss = FindRaidBoss()
 				if FoundRaidBoss then
 					if not VoidStart then
 						local IFrame = FoundRaidBoss:FindFirstChild("IFrame")
-						if IFrame and IFrame:IsA("Folder") then
+						local Boosts = FoundRaidBoss:FindFirstChild("Boosts")
+						if IFrame and IFrame:IsA("Folder") and Boosts and Boosts:IsA("Folder") and not Boosts:FindFirstChild("Skill_HardSet") then
 							VoidStart = tick()
 						end
 					end
@@ -846,7 +847,7 @@ Settings_AutoSkills = SettingsGroupbox:CreateToggle({
 		AutoSkills = Value
 		task.spawn(function()
 			while AutoSkills do task.wait()
-				if NearestMob and not VoidRaid then
+				if NearestMob and not Voided and not Voiding then
 					for _, v in ipairs(SelectedSkills) do
 						Skill:FireServer(v, true)
 						task.wait(0.5)
