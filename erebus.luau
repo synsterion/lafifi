@@ -616,9 +616,11 @@ Farm_AutoRaid = FarmGroupbox:CreateToggle({
 									end
 								end
 							until not AutoRaid or not FoundRaidBoss or not FoundRaidBoss.Parent or not FoundRaidBoss:IsDescendantOf(workspace) or FoundRaidBoss.Humanoid.Health <= 0 or Humanoid.Health <= 0
-
+							NearestMob = false
 							Voiding = false
-							if RaidFall then RaidFall:Destroy() end
+							if RaidFall then
+								RaidFall:Destroy()
+							end
 						elseif FoundMob then
 							repeat task.wait()
 								if FoundMob then
@@ -631,8 +633,11 @@ Farm_AutoRaid = FarmGroupbox:CreateToggle({
 									HumanoidRootPart.CFrame = FoundMob:GetPivot() * AttackMode
 								end
 							until not AutoRaid or not FoundMob or not FoundMob.Parent or not FoundMob:IsDescendantOf(workspace) or FoundMob.Humanoid.Health <= 0 or Humanoid.Health <= 0
+							NearestMob = false
 
-							if RaidFall then RaidFall:Destroy() end
+							if RaidFall then 
+								RaidFall:Destroy()
+							end
 						end
 					end
 				end
