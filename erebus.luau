@@ -584,13 +584,44 @@ Farm_AutoRaid = FarmGroupbox:CreateToggle({
 					local FoundRaidBoss = FindRaidBoss()
 
 					if FoundRaidBoss then
+						local VoidStart = nil
+						local LastSkill = tick()
+						local Voided = false
+						local Voiding = false
+
 						repeat task.wait()
 							if FoundRaidBoss and FoundRaidBoss:FindFirstChild("Humanoid") then
-								local BossHumanoid = FoundRaidBoss:FindFirstChild("Humanoid")
+								local BossHumanoid = FoundRaidBoss.Humanoid
+
+								if not VoidStart then
+									local IFrame = FoundRaidBoss:FindFirstChild("IFrame")
+									if IFrame and IFrame:IsA("Folder") then
+										VoidStart = tick()
+									end
+								end
+
+								-- Fire the skill at 15.5 seconds (simulates the 0.5s wait)
+								if VoidStart and not Voided and tick() - VoidStart > 15.5 then
+									Voided = true
+									Skill:FireServer("V", true)
+								end
+
+								-- Trigger actual void drop at 17.5 seconds (simulates the 2s wait)
+								if VoidStart and tick() - VoidStart > 17.5 then
+									Voiding = true
+								end
+
+								-- CFrame Positioning Logic
 								if Voiding then
+									-- Phase 3: Dropping into the void
 									NearestMob = false
 									HumanoidRootPart.CFrame = CFrame.new(0, -477, 0)
+								elseif VoidStart and tick() - VoidStart > 15 then
+									-- Phase 2: The 2.5-second window where you TP behind the boss to cast
+									NearestMob = false
+									HumanoidRootPart.CFrame = FoundRaidBoss:GetPivot() * CFrame.new(0, 0, 7)
 								else
+									-- Phase 1: Normal combat positioning
 									if BossHumanoid.Health > 0 or GetDistance(FoundRaidBoss:GetPivot() * AttackMode, HumanoidRootPart) < 20 then
 										NearestMob = true
 									else
@@ -601,8 +632,10 @@ Farm_AutoRaid = FarmGroupbox:CreateToggle({
 								end
 							end
 						until not AutoRaid or not FoundRaidBoss or not FoundRaidBoss.Parent or not FoundRaidBoss:IsDescendantOf(workspace) or FoundRaidBoss.Humanoid.Health <= 0 or Humanoid.Health <= 0
+
 						Voiding = false
-						RaidFall:Destroy()
+						if RaidFall then RaidFall:Destroy() end
+
 					elseif FoundMob then
 						repeat task.wait()
 							if FoundMob then
@@ -615,10 +648,12 @@ Farm_AutoRaid = FarmGroupbox:CreateToggle({
 								HumanoidRootPart.CFrame = FoundMob:GetPivot() * AttackMode
 							end
 						until not AutoRaid or not FoundMob or not FoundMob.Parent or not FoundMob:IsDescendantOf(workspace) or FoundMob.Humanoid.Health <= 0 or Humanoid.Health <= 0
-						RaidFall:Destroy()
+
+						if RaidFall then RaidFall:Destroy() end
 					end
 				end
 			end
+
 			if AutoRaid == false then
 				if RaidFall then
 					RaidFall:Destroy()
@@ -764,37 +799,6 @@ Settings_VoidRaid = SettingsGroupbox:CreateToggle({
 	Style = 2,
 	Callback = function(Value)
 		VoidRaid = Value
-		while VoidRaid do task.wait()
-			local FoundRaidBoss = FindRaidBoss()
-			local VoidStart = nil
-			local LastSkill = tick()
-			local Voided = false
-
-			if FoundRaidBoss and FoundRaidBoss:FindFirstChild("Humanoid") then
-				local BossHumanoid = FoundRaidBoss.Humanoid
-				local VoidStart = nil
-				local LastSkill = tick()
-				local Voided = false
-
-				if not VoidStart then
-					local IFrame = FoundRaidBoss:FindFirstChild("IFrame")
-					if IFrame and IFrame:IsA("Folder") then
-						VoidStart = tick()
-					end
-				end
-
-				if VoidStart and not Voided and tick() - VoidStart > 15 then
-					NearestMob = false
-					Voided = true
-					task.wait(0.5)
-
-					Skill:FireServer("V", true)
-					task.wait(2)
-
-					Voiding = true
-				end
-			end
-		end
 	end,
 }, "Settings_VoidRaid")
 
