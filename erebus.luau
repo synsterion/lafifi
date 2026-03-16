@@ -592,15 +592,16 @@ Farm_AutoRaid = FarmGroupbox:CreateToggle({
 						repeat task.wait()
 							if FoundRaidBoss and FoundRaidBoss:FindFirstChild("Humanoid") then
 								local BossHumanoid = FoundRaidBoss.Humanoid
-
+								
 								if VoidRaid then
 									if not VoidStart then
-										if BossHumanoid.Health < 2600 then
+										local IFrame = FoundRaidBoss:FindFirstChild("IFrame")
+										if IFrame and IFrame:IsA("Folder") then
 											VoidStart = tick()
 										end
 									end
 
-									if VoidStart and not Voided and tick() - VoidStart > 5 then
+									if VoidStart and not Voided and tick() - VoidStart > 10 then
 										NearestMob = false
 										DoingSkill = true
 										Voided = true
