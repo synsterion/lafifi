@@ -600,22 +600,19 @@ Farm_AutoRaid = FarmGroupbox:CreateToggle({
 										end
 									end
 
-									if VoidStart and not Voided and tick() - VoidStart > 20 then
-										DoingSkill = true
+									if VoidStart and not Voided and tick() - VoidStart > 5 then
 										NearestMob = false
-										Skill:FireServer("X", true)
-									end
-
-									if VoidStart and not Voided and tick() - VoidStart > 23.5 then
+										DoingSkill = true
 										Voided = true
-										DoingSkill = true
-										NearestMob = false
+										task.wait(0.5)
+										
+										HumanoidRootPart.CFrame = FoundRaidBoss:GetPivot() * CFrame.new(0,0,7)
 										Skill:FireServer("X", true)
-									end
-
-									if VoidStart and tick() - VoidStart > 26 then
-										DoingSkill = true
-										NearestMob = false
+										task.wait(2)
+										HumanoidRootPart.CFrame = FoundRaidBoss:GetPivot() * CFrame.new(0,0,7)
+										Skill:FireServer("X", true)
+										task.wait(1)
+										
 										Voiding = true
 									end
 								end
