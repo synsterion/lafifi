@@ -358,7 +358,7 @@ local BusStopList = {
 local VoidList = {
 	["Anubis"] = {
 		Ability1 = "X",
-		Wait1 = 1.5,
+		Wait1 = 2,
 		Ability2 = "X",
 		Wait2 = 1
 	},
