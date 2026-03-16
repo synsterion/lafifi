@@ -788,7 +788,7 @@ Settings_VoidRaid = SettingsGroupbox:CreateToggle({
 				if FoundRaidBoss then
 					if not VoidStart then
 						local IFrame = FoundRaidBoss:FindFirstChild("IFrame")
-						if IFrame and IFrame:IsA("Folder") and FoundRaidBoss.Humanoid and FoundRaidBoss.Humanoid.Health > 2800 then
+						if IFrame and IFrame:IsA("Folder") and not GetChild(FoundRaidBoss, "Highlight", "Class") then
 							VoidStart = tick()
 						end
 					end
