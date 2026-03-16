@@ -602,16 +602,22 @@ if VoidRaid then
 								end
 
 								if VoidStart and not Voided and tick() - VoidStart > 10.5 then
-									Voided = true
+										Voided = true
+										DoingSkill = true
+										NearestMob = false
 									Skill:FireServer("X", true)
 								end
 
 								if VoidStart and not Voided and tick() - VoidStart > 12.5 then
-									Voided = true
+										Voided = true
+										DoingSkill = true
+										NearestMob = false
 									Skill:FireServer("X", true)
 								end
 
-								if VoidStart and tick() - VoidStart > 13.5 then
+									if VoidStart and tick() - VoidStart > 13.5 then
+										DoingSkill = true
+										NearestMob = false
 									Voiding = true
 								end
 								end
@@ -620,7 +626,7 @@ if VoidRaid then
 									NearestMob = false
 									HumanoidRootPart.CFrame = CFrame.new(0, -477, 0)
 								else
-									if BossHumanoid.Health > 0 or GetDistance(FoundRaidBoss:GetPivot() * AttackMode, HumanoidRootPart) < 20 then
+									if BossHumanoid.Health > 0 or GetDistance(FoundRaidBoss:GetPivot() * AttackMode, HumanoidRootPart) < 20 and not DoingSkill then
 										NearestMob = true
 									else
 										NearestMob = false
