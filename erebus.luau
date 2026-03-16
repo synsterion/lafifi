@@ -566,7 +566,7 @@ Farm_AutoRaid = FarmGroupbox:CreateToggle({
 	Style = 2,
 	Callback = function(Value)
 		AutoRaid = Value
-		--/[task.spawn(function()
+		task.spawn(function()
 		while AutoRaid do task.wait()
 			if game.PlaceId ~= RaidID then
 				if SelectedRaid and SelectedRaid ~= "" then
@@ -634,7 +634,7 @@ Farm_AutoRaid = FarmGroupbox:CreateToggle({
 				end
 			end
 		end
-		--/[end)
+		end)
 	end,
 }, "Farm_AutoRaid")
 
@@ -644,7 +644,7 @@ Farm_AutoRetryRaid = FarmGroupbox:CreateToggle({
 	Style = 2,
 	Callback = function(Value)
 		AutoRetryRaid = Value
-		--/[task.spawn(function()
+		task.spawn(function()
 		while AutoRetryRaid do task.wait()
 			if GetChild(PlayerGui, "raidcomplete", "First") then
 				repeat task.wait(5)
@@ -652,7 +652,7 @@ Farm_AutoRetryRaid = FarmGroupbox:CreateToggle({
 				until not AutoRetryRaid
 			end 
 		end
-		--/[end)
+		end)
 	end,
 }, "Farm_AutoRetryRaid")
 
@@ -669,13 +669,13 @@ Stand_AutoSummonStand = StandGroupbox:CreateToggle({
 	Style = 2,
 	Callback = function(Value)
 		AutoSummonStand = Value
-		--/[task.spawn(function()
+		task.spawn(function()
 		while AutoSummonStand do task.wait()
 			if not Character:GetAttribute("SummonedStand") then
 				SummonStand:FireServer()
 			end
 		end
-		--/[end)
+		end)
 	end,
 }, "Stand_AutoSummonStand")
 
@@ -685,7 +685,7 @@ Stand_AutoMeditation = StandGroupbox:CreateToggle({
 	Style = 2,
 	Callback = function(Value)
 		AutoMeditation = Value
-		--/[task.spawn(function()
+		task.spawn(function()
 		while AutoMeditation do task.wait()
 			if not GetChild(Map, "MeditationArena", "First") then
 				if #Meditation:GetChildren() == 0 then
@@ -740,7 +740,7 @@ Stand_AutoMeditation = StandGroupbox:CreateToggle({
 				end
 			end
 		end
-		--/[end)
+		end)
 	end,
 }, "Stand_AutoMeditation")
 
@@ -757,13 +757,13 @@ Settings_AutoM1 = SettingsGroupbox:CreateToggle({
 	Style = 2,
 	Callback = function(Value)
 		AutoM1 = Value
-		--/[task.spawn(function()
+		task.spawn(function()
 		while AutoM1 do task.wait()
 			if NearestMob then
 				M1:FireServer(true, true)
 			end 
 		end
-		--/[end)
+		end)
 	end,
 }, "Settings_AutoM1")
 
@@ -773,6 +773,7 @@ Settings_VoidRaid = SettingsGroupbox:CreateToggle({
 	Style = 2,
 	Callback = function(Value)
 		VoidRaid = Value
+		task.spawn(function()
 		while VoidRaid do task.wait()
 			local FoundRaidBoss = FindRaidBoss()
 			if FoundRaidBoss then
@@ -800,6 +801,7 @@ Settings_VoidRaid = SettingsGroupbox:CreateToggle({
 				Voiding = false
 			end
 		end
+		end)
 	end,
 }, "Settings_VoidRaid")
 
@@ -809,13 +811,13 @@ Settings_AutoM2 = SettingsGroupbox:CreateToggle({
 	Style = 2,
 	Callback = function(Value)
 		AutoM2 = Value
-		--/[task.spawn(function()
+		task.spawn(function()
 		while AutoM2 do task.wait()
 			if NearestMob then
 				M2:FireServer(true, true)
 			end 
 		end
-		--/[end)
+		end)
 	end,
 }, "Settings_AutoM2")
 
@@ -838,7 +840,7 @@ Settings_AutoSkills = SettingsGroupbox:CreateToggle({
 	Style = 2,
 	Callback = function(Value)
 		AutoSkills = Value
-		--/[task.spawn(function()
+		task.spawn(function()
 		while AutoSkills do task.wait()
 			if NearestMob and not VoidRaid then
 				for _, v in ipairs(SelectedSkills) do
@@ -847,7 +849,7 @@ Settings_AutoSkills = SettingsGroupbox:CreateToggle({
 				end
 			end 
 		end
-		--/[end)
+		end)
 	end,
 }, "Settings_AutoSkills")
 
@@ -925,7 +927,7 @@ Shop_AutoSellAccessories = ShopGroupbox:CreateToggle({
 	Style = 2,
 	Callback = function(Value)
 		AutoSellAccessories = Value
-		--/[task.spawn(function()
+		task.spawn(function()
 		while AutoSellAccessories do task.wait()
 			local LiveInventory = GetInventory()
 
@@ -948,7 +950,7 @@ Shop_AutoSellAccessories = ShopGroupbox:CreateToggle({
 				end
 			end
 		end
-		--/[end)
+		end)
 	end,
 }, "Shop_AutoSellAccessories")
 
@@ -980,7 +982,7 @@ Item_AutoOpenChests = ItemGroupbox:CreateToggle({
 	Style = 2,
 	Callback = function(Value)
 		AutoOpenChests = Value
-		--/[task.spawn(function()
+		task.spawn(function()
 		while AutoOpenChests do task.wait()
 			for _, chest in ipairs(SelectedChests) do
 				local args = {
@@ -993,7 +995,7 @@ Item_AutoOpenChests = ItemGroupbox:CreateToggle({
 				task.wait(0.5)
 			end
 		end
-		--/[end)
+		end)
 	end,
 }, "Item_AutoOpenChests")
 
