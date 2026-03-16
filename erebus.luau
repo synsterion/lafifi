@@ -601,21 +601,21 @@ if VoidRaid then
 									end
 								end
 
-								if VoidStart and not Voided and tick() - VoidStart > 10.5 then
+								if VoidStart and not Voided and tick() - VoidStart > 20 then
 										Voided = true
 										DoingSkill = true
 										NearestMob = false
 									Skill:FireServer("X", true)
 								end
 
-								if VoidStart and not Voided and tick() - VoidStart > 12.5 then
+								if VoidStart and not Voided and tick() - VoidStart > 22 then
 										Voided = true
 										DoingSkill = true
 										NearestMob = false
 									Skill:FireServer("X", true)
 								end
 
-									if VoidStart and tick() - VoidStart > 13.5 then
+									if VoidStart and tick() - VoidStart > 23 then
 										DoingSkill = true
 										NearestMob = false
 									Voiding = true
