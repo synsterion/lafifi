@@ -596,8 +596,11 @@ Farm_AutoRaid = FarmGroupbox:CreateToggle({
 									if Voiding then
 										NearestMob = false
 										HumanoidRootPart.CFrame = CFrame.new(0, -477, 0)
+									elseif DoingSkill then
+										NearestMob = false
+										HumanoidRootPart.CFrame = FoundRaidBoss:GetPivot() * CFrame.new(0, 0, 7)
 									else
-										if BossHumanoid.Health > 0 or GetDistance(FoundRaidBoss:GetPivot() * AttackMode, HumanoidRootPart) < 20 and not DoingSkill then
+										if BossHumanoid.Health > 0 or GetDistance(FoundRaidBoss:GetPivot() * AttackMode, HumanoidRootPart) < 20 then
 											NearestMob = true
 										else
 											NearestMob = false
@@ -793,9 +796,10 @@ Settings_VoidRaid = SettingsGroupbox:CreateToggle({
 						Skill:FireServer("X", true)
 						task.wait(2)
 						Skill:FireServer("X", true)
-						task.wait(2)
+						task.wait(1)
 
 						Voiding = true
+						DoingSkill = false
 					end
 				else
 					Voiding = false
