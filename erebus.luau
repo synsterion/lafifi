@@ -355,6 +355,15 @@ local BusStopList = {
 	--["Placeholder"] = CFrame.new(),
 }
 
+local VoidList = {
+	["Anubis"] = {
+		Ability1 = "X",
+		Wait1 = 1.7,
+		Ability2 = "X",
+		Wait2 = 1
+	},
+}
+
 local RaidsList = {
 	["Avdol"] = { 
 		NPC = "Muhammad Avdol",
@@ -782,8 +791,7 @@ Settings_VoidRaid = SettingsGroupbox:CreateToggle({
 				if FoundRaidBoss then
 					if not VoidStart then
 						local IFrame = FoundRaidBoss:FindFirstChild("IFrame")
-						local Boosts = FoundRaidBoss:FindFirstChild("Boosts")
-						if IFrame and IFrame:IsA("Folder") and Boosts and Boosts:IsA("Folder") and not Boosts:FindFirstChild("Skill_HardSet") then
+						if IFrame and IFrame:IsA("Folder") and FoundRaidBoss.Humanoid and FoundRaidBoss.Humanoid.Health > 2800 then
 							VoidStart = tick()
 						end
 					end
@@ -794,10 +802,10 @@ Settings_VoidRaid = SettingsGroupbox:CreateToggle({
 						Voided = true
 						task.wait(0.5)
 
-						Skill:FireServer("X", true)
-						task.wait(1.7)
-						Skill:FireServer("X", true)
-						task.wait(1)
+						Skill:FireServer(VoidList[Character:GetAttribute("SummonedStand")].Ability1, true)
+						task.wait(VoidList[Character:GetAttribute("SummonedStand")].Wait1)
+						Skill:FireServer(VoidList[Character:GetAttribute("SummonedStand")].Ability2, true)
+						task.wait(VoidList[Character:GetAttribute("SummonedStand")].Wait2)
 
 						Voiding = true
 						DoingSkill = false
