@@ -795,7 +795,7 @@ Settings_VoidRaid = SettingsGroupbox:CreateToggle({
 						task.wait(0.5)
 
 						Skill:FireServer("X", true)
-						task.wait(2)
+						task.wait(1.7)
 						Skill:FireServer("X", true)
 						task.wait(1)
 
