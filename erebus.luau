@@ -793,7 +793,7 @@ Settings_VoidRaid = SettingsGroupbox:CreateToggle({
 						Skill:FireServer("X", true)
 						task.wait(2)
 						Skill:FireServer("X", true)
-						task.wait(1)
+						task.wait(2)
 
 						Voiding = true
 					end
