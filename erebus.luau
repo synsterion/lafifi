@@ -370,7 +370,7 @@ local RaidsList = {
 	},
 	["Dio"] = { 
 		NPC = "???",
-		Position = CFrame.new(349, 877, 1012),
+		Position = CFrame.new(2795, 951, 739),
 	},
 	["Kira"] = { 
 		NPC = "Yoshikage Kira",
@@ -504,7 +504,7 @@ local function FindMob()
 	local Largest = math.huge
 	local Closest = nil
 	for i, v in pairs(Live:GetChildren()) do
-		if v:IsA("Model") and v:GetAttribute("DisplayName") and v:GetAttribute("DisplayName") ~= "Hostage" and v:FindFirstChild("Humanoid") and v:FindFirstChild("Humanoid").Health > 0 and v.PrimaryPart then
+		if v:IsA("Model") and v.Name ~= "Server" and v:GetAttribute("DisplayName") and v:GetAttribute("DisplayName") ~= "Hostage" and v:FindFirstChild("Humanoid") and v:FindFirstChild("Humanoid").Health > 0 and v.PrimaryPart then
 			local Magnitude = (HumanoidRootPart.Position - v:GetPivot().Position)
 				.Magnitude
 			if Magnitude < Largest then
@@ -520,7 +520,7 @@ local function FindRaidBoss()
 	local Largest = math.huge
 	local Closest = nil
 	for i, v in pairs(Live:GetChildren()) do
-		if v:IsA("Model") and (string.find(string.lower(v.Name), "jotaro") or string.find(string.lower(v.Name), "dio") or string.find(string.lower(v.Name), "kira")) and v:FindFirstChild("Humanoid") and v:FindFirstChild("Humanoid").Health > 0 and v.PrimaryPart then
+		if v:IsA("Model") and v.Name ~= "Server" and (string.find(string.lower(v.Name), "jotaro") or string.find(string.lower(v.Name), "dio") or string.find(string.lower(v.Name), "kira")) and v:FindFirstChild("Humanoid") and v:FindFirstChild("Humanoid").Health > 0 and v.PrimaryPart then
 			local Magnitude = (HumanoidRootPart.Position - v:GetPivot().Position)
 				.Magnitude
 			if Magnitude < Largest then
@@ -536,7 +536,7 @@ local function FindTheSelf()
 	local Largest = math.huge
 	local Closest = nil
 	for i, v in pairs(Live:GetChildren()) do
-		if v:IsA("Model") and v:GetAttribute("DisplayName") and v:GetAttribute("DisplayName") == Player.Name and v:FindFirstChild("Humanoid") and v:FindFirstChild("Humanoid").Health > 0 and v.PrimaryPart then
+		if v:IsA("Model") and v.Name ~= "Server" and v:GetAttribute("DisplayName") and v:GetAttribute("DisplayName") == Player.Name and v:FindFirstChild("Humanoid") and v:FindFirstChild("Humanoid").Health > 0 and v.PrimaryPart then
 			local Magnitude = (HumanoidRootPart.Position - v:GetPivot().Position)
 				.Magnitude
 			if Magnitude < Largest then
@@ -604,7 +604,7 @@ Farm_AutoRaid = FarmGroupbox:CreateToggle({
 									if Voiding then
 										HumanoidRootPart.CFrame = CFrame.new(0, -477, 0)
 									elseif DoingSkill then
-										HumanoidRootPart.CFrame = FoundRaidBoss:GetPivot() * (CFrame.new(0, 6, 2) * CFrame.Angles(math.rad(-60), 0, 0))
+										HumanoidRootPart.CFrame = FoundRaidBoss:GetPivot() * (CFrame.new(0, 5, 2) * CFrame.Angles(math.rad(-60), 0, 0))
 									else
 										if BossHumanoid.Health > 0 or GetDistance(FoundRaidBoss:GetPivot() * AttackMode, HumanoidRootPart) < 20 then
 											NearestMob = true
