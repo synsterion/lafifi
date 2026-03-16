@@ -358,9 +358,15 @@ local BusStopList = {
 local VoidList = {
 	["Anubis"] = {
 		Ability1 = "X",
-		Wait1 = 1.7,
+		Wait1 = 1.5,
 		Ability2 = "X",
 		Wait2 = 1
+	},
+	["The World"] = {
+		Ability1 = "V",
+		Wait1 = 2,
+		Ability2 = "V",
+		Wait2 = 0
 	},
 }
 
@@ -796,7 +802,7 @@ Settings_VoidRaid = SettingsGroupbox:CreateToggle({
 						end
 					end
 
-					if VoidStart and not Voided and tick() - VoidStart > 20 then
+					if VoidStart and not Voided and tick() - VoidStart > 10 then
 						NearestMob = false
 						DoingSkill = true
 						Voided = true
