@@ -602,7 +602,6 @@ Farm_AutoRaid = FarmGroupbox:CreateToggle({
 									end
 
 									if VoidStart and not Voided and tick() - VoidStart > 20 then
-										Voided = true
 										DoingSkill = true
 										NearestMob = false
 										Skill:FireServer("X", true)
