@@ -595,8 +595,7 @@ Farm_AutoRaid = FarmGroupbox:CreateToggle({
 
 								if VoidRaid then
 									if not VoidStart then
-										local IFrame = FoundRaidBoss:FindFirstChild("IFrame")
-										if IFrame and IFrame:IsA("Folder") then
+										if BossHumanoid.Health < 2600 then
 											VoidStart = tick()
 										end
 									end
@@ -607,14 +606,14 @@ Farm_AutoRaid = FarmGroupbox:CreateToggle({
 										Skill:FireServer("X", true)
 									end
 
-									if VoidStart and not Voided and tick() - VoidStart > 22 then
+									if VoidStart and not Voided and tick() - VoidStart > 23 then
 										Voided = true
 										DoingSkill = true
 										NearestMob = false
 										Skill:FireServer("X", true)
 									end
 
-									if VoidStart and tick() - VoidStart > 23 then
+									if VoidStart and tick() - VoidStart > 25 then
 										DoingSkill = true
 										NearestMob = false
 										Voiding = true
