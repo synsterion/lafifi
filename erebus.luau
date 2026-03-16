@@ -601,13 +601,13 @@ Farm_AutoRaid = FarmGroupbox:CreateToggle({
 								end
 
 								-- Fire the skill at 15.5 seconds (simulates the 0.5s wait)
-								if VoidStart and not Voided and tick() - VoidStart > 15.5 then
+								if VoidStart and not Voided and tick() - VoidStart > 10.5 then
 									Voided = true
 									Skill:FireServer("Z", true)
 								end
 
 								-- Trigger actual void drop at 17.5 seconds (simulates the 2s wait)
-								if VoidStart and tick() - VoidStart > 17.5 then
+								if VoidStart and tick() - VoidStart > 12.5 then
 									Voiding = true
 								end
 
@@ -616,7 +616,7 @@ Farm_AutoRaid = FarmGroupbox:CreateToggle({
 									-- Phase 3: Dropping into the void
 									NearestMob = false
 									HumanoidRootPart.CFrame = CFrame.new(0, -477, 0)
-								elseif VoidStart and tick() - VoidStart > 15 then
+								elseif VoidStart and tick() - VoidStart > 10 then
 									-- Phase 2: The 2.5-second window where you TP behind the boss to cast
 									NearestMob = false
 									HumanoidRootPart.CFrame = FoundRaidBoss:GetPivot() * CFrame.new(0, 0, 7)
