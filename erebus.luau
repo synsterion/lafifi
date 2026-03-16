@@ -567,73 +567,73 @@ Farm_AutoRaid = FarmGroupbox:CreateToggle({
 	Callback = function(Value)
 		AutoRaid = Value
 		task.spawn(function()
-		while AutoRaid do task.wait()
-			if game.PlaceId ~= RaidID then
-				if SelectedRaid and SelectedRaid ~= "" then
-					if GetDistance(RaidsList[SelectedRaid].Position, HumanoidRootPart) > 10 then
-						HumanoidRootPart.CFrame = RaidsList[SelectedRaid].Position
-					elseif GetChild(Npcs, RaidsList[SelectedRaid].NPC, "First") and GetChild(GetChild(Npcs, RaidsList[SelectedRaid].NPC, "First"), "HumanoidRootPart", "First") then
-						repeat task.wait(0.5)
-							Dialogue:FireServer(GetChild(Npcs, RaidsList[SelectedRaid].NPC, "First"), "Raid.")
+			while AutoRaid do task.wait()
+				if game.PlaceId ~= RaidID then
+					if SelectedRaid and SelectedRaid ~= "" then
+						if GetDistance(RaidsList[SelectedRaid].Position, HumanoidRootPart) > 10 then
 							HumanoidRootPart.CFrame = RaidsList[SelectedRaid].Position
-						until not AutoRaid or game.PlaceId == RaidID
+						elseif GetChild(Npcs, RaidsList[SelectedRaid].NPC, "First") and GetChild(GetChild(Npcs, RaidsList[SelectedRaid].NPC, "First"), "HumanoidRootPart", "First") then
+							repeat task.wait(0.5)
+								Dialogue:FireServer(GetChild(Npcs, RaidsList[SelectedRaid].NPC, "First"), "Raid.")
+								HumanoidRootPart.CFrame = RaidsList[SelectedRaid].Position
+							until not AutoRaid or game.PlaceId == RaidID
+						end
 					end
-				end
-			else
-				if not HumanoidRootPart:FindFirstChild("LinearVelocity") then
-					RaidFall = Instance.new("LinearVelocity",HumanoidRootPart)
-					RaidFall.ForceLimitsEnabled = false
-					RaidFall.Attachment0 = HumanoidRootPart:WaitForChild("RootAttachment")
 				else
-					local FoundMob = FindMob()
-					local FoundRaidBoss = FindRaidBoss()
+					if not HumanoidRootPart:FindFirstChild("LinearVelocity") then
+						RaidFall = Instance.new("LinearVelocity",HumanoidRootPart)
+						RaidFall.ForceLimitsEnabled = false
+						RaidFall.Attachment0 = HumanoidRootPart:WaitForChild("RootAttachment")
+					else
+						local FoundMob = FindMob()
+						local FoundRaidBoss = FindRaidBoss()
 
-					if FoundRaidBoss then
-						repeat task.wait()
-							if FoundRaidBoss and FoundRaidBoss:FindFirstChild("Humanoid") then
-								local BossHumanoid = FoundRaidBoss.Humanoid
+						if FoundRaidBoss then
+							repeat task.wait()
+								if FoundRaidBoss and FoundRaidBoss:FindFirstChild("Humanoid") then
+									local BossHumanoid = FoundRaidBoss.Humanoid
 
-								if Voiding then
-									NearestMob = false
-									HumanoidRootPart.CFrame = CFrame.new(0, -477, 0)
-								else
-									if BossHumanoid.Health > 0 or GetDistance(FoundRaidBoss:GetPivot() * AttackMode, HumanoidRootPart) < 20 and not DoingSkill then
-										NearestMob = true
+									if Voiding then
+										NearestMob = false
+										HumanoidRootPart.CFrame = CFrame.new(0, -477, 0)
 									else
+										if BossHumanoid.Health > 0 or GetDistance(FoundRaidBoss:GetPivot() * AttackMode, HumanoidRootPart) < 20 and not DoingSkill then
+											NearestMob = true
+										else
+											NearestMob = false
+										end
+
+										HumanoidRootPart.CFrame = FoundRaidBoss:GetPivot() * AttackMode 
+									end
+								end
+							until not AutoRaid or not FoundRaidBoss or not FoundRaidBoss.Parent or not FoundRaidBoss:IsDescendantOf(workspace) or FoundRaidBoss.Humanoid.Health <= 0 or Humanoid.Health <= 0
+
+							Voiding = false
+							if RaidFall then RaidFall:Destroy() end
+						elseif FoundMob then
+							repeat task.wait()
+								if FoundMob then
+									if FoundMob.Humanoid.Health > 0 or GetDistance(FoundMob:GetPivot() * AttackMode, HumanoidRootPart) < 20 then
+										NearestMob = true
+									elseif not FoundMob or FoundMob.Humanoid.Health <= 0 or GetDistance(FoundMob:GetPivot() * AttackMode, HumanoidRootPart) > 20 then
 										NearestMob = false
 									end
 
-									HumanoidRootPart.CFrame = FoundRaidBoss:GetPivot() * AttackMode 
+									HumanoidRootPart.CFrame = FoundMob:GetPivot() * AttackMode
 								end
-							end
-						until not AutoRaid or not FoundRaidBoss or not FoundRaidBoss.Parent or not FoundRaidBoss:IsDescendantOf(workspace) or FoundRaidBoss.Humanoid.Health <= 0 or Humanoid.Health <= 0
+							until not AutoRaid or not FoundMob or not FoundMob.Parent or not FoundMob:IsDescendantOf(workspace) or FoundMob.Humanoid.Health <= 0 or Humanoid.Health <= 0
 
-						Voiding = false
-						if RaidFall then RaidFall:Destroy() end
-					elseif FoundMob then
-						repeat task.wait()
-							if FoundMob then
-								if FoundMob.Humanoid.Health > 0 or GetDistance(FoundMob:GetPivot() * AttackMode, HumanoidRootPart) < 20 then
-									NearestMob = true
-								elseif not FoundMob or FoundMob.Humanoid.Health <= 0 or GetDistance(FoundMob:GetPivot() * AttackMode, HumanoidRootPart) > 20 then
-									NearestMob = false
-								end
+							if RaidFall then RaidFall:Destroy() end
+						end
+					end
+				end
 
-								HumanoidRootPart.CFrame = FoundMob:GetPivot() * AttackMode
-							end
-						until not AutoRaid or not FoundMob or not FoundMob.Parent or not FoundMob:IsDescendantOf(workspace) or FoundMob.Humanoid.Health <= 0 or Humanoid.Health <= 0
-
-						if RaidFall then RaidFall:Destroy() end
+				if AutoRaid == false then
+					if RaidFall then
+						RaidFall:Destroy()
 					end
 				end
 			end
-
-			if AutoRaid == false then
-				if RaidFall then
-					RaidFall:Destroy()
-				end
-			end
-		end
 		end)
 	end,
 }, "Farm_AutoRaid")
@@ -645,13 +645,13 @@ Farm_AutoRetryRaid = FarmGroupbox:CreateToggle({
 	Callback = function(Value)
 		AutoRetryRaid = Value
 		task.spawn(function()
-		while AutoRetryRaid do task.wait()
-			if GetChild(PlayerGui, "raidcomplete", "First") then
-				repeat task.wait(5)
-					RetryRaid:FireServer()
-				until not AutoRetryRaid
-			end 
-		end
+			while AutoRetryRaid do task.wait()
+				if GetChild(PlayerGui, "raidcomplete", "First") then
+					repeat task.wait(5)
+						RetryRaid:FireServer()
+					until not AutoRetryRaid
+				end 
+			end
 		end)
 	end,
 }, "Farm_AutoRetryRaid")
@@ -670,11 +670,11 @@ Stand_AutoSummonStand = StandGroupbox:CreateToggle({
 	Callback = function(Value)
 		AutoSummonStand = Value
 		task.spawn(function()
-		while AutoSummonStand do task.wait()
-			if not Character:GetAttribute("SummonedStand") then
-				SummonStand:FireServer()
+			while AutoSummonStand do task.wait()
+				if not Character:GetAttribute("SummonedStand") then
+					SummonStand:FireServer()
+				end
 			end
-		end
 		end)
 	end,
 }, "Stand_AutoSummonStand")
@@ -686,60 +686,60 @@ Stand_AutoMeditation = StandGroupbox:CreateToggle({
 	Callback = function(Value)
 		AutoMeditation = Value
 		task.spawn(function()
-		while AutoMeditation do task.wait()
-			if not GetChild(Map, "MeditationArena", "First") then
-				if #Meditation:GetChildren() == 0 then
-					HumanoidRootPart.CFrame = CFrame.new(1087, 885, 89)
-					task.wait(0.5)
-				else
-					local YogaMat = Meditation:GetChildren()[1]
+			while AutoMeditation do task.wait()
+				if not GetChild(Map, "MeditationArena", "First") then
+					if #Meditation:GetChildren() == 0 then
+						HumanoidRootPart.CFrame = CFrame.new(1087, 885, 89)
+						task.wait(0.5)
+					else
+						local YogaMat = Meditation:GetChildren()[1]
 
-					if GetDistance(YogaMat.CFrame, HumanoidRootPart) > 3 then
-						HumanoidRootPart.CFrame = YogaMat.CFrame
-					end
-
-					repeat task.wait(0.1)
-						FireProximityPrompt(GetChild(YogaMat, "ProximityPrompt"), 1, true)
-					until GetChild(Map, "MeditationArena", "First") or not AutoMeditation
-				end
-			elseif GetChild(Map, "MeditationArena", "First") and not FindTheSelf() then
-				if GetChild(Npcs, "The Self", "First") then
-					local TheSelfNPC = GetChild(Npcs, "The Self", "First")
-
-					HumanoidRootPart.CFrame = TheSelfNPC:GetPivot()
-
-					repeat task.wait(0.5)
-						Dialogue:FireServer(TheSelfNPC, "Yes.")
-					until not GetChild(Npcs, "The Self", "First") or not AutoMeditation
-				end
-			elseif GetChild(Map, "MeditationArena", "First") and FindTheSelf() then
-				if not HumanoidRootPart:FindFirstChild("LinearVelocity") then
-					MeditationFall = Instance.new("LinearVelocity",HumanoidRootPart)
-					MeditationFall.ForceLimitsEnabled = false
-					MeditationFall.Attachment0 = HumanoidRootPart:WaitForChild("RootAttachment")
-				else
-					local FoundTheSelfMob = FindTheSelf()
-
-					repeat task.wait()
-						if FoundTheSelfMob then
-							if FoundTheSelfMob.Humanoid.Health > 0 or GetDistance(FoundTheSelfMob:GetPivot() * AttackMode, HumanoidRootPart) < 20 then
-								NearestMob = true
-							elseif not FoundTheSelfMob or FoundTheSelfMob.Humanoid.Health <= 0 or GetDistance(FoundTheSelfMob:GetPivot() * AttackMode, HumanoidRootPart) > 20 then
-								NearestMob = false
-							end
-
-							HumanoidRootPart.CFrame = FoundTheSelfMob:GetPivot() * AttackMode
+						if GetDistance(YogaMat.CFrame, HumanoidRootPart) > 3 then
+							HumanoidRootPart.CFrame = YogaMat.CFrame
 						end
-					until not AutoMeditation or not FoundTheSelfMob or not FoundTheSelfMob.Parent or not FoundTheSelfMob:IsDescendantOf(workspace) or FoundTheSelfMob.Humanoid.Health <= 0 or Humanoid.Health <= 0
-					MeditationFall:Destroy()
+
+						repeat task.wait(0.1)
+							FireProximityPrompt(GetChild(YogaMat, "ProximityPrompt"), 1, true)
+						until GetChild(Map, "MeditationArena", "First") or not AutoMeditation
+					end
+				elseif GetChild(Map, "MeditationArena", "First") and not FindTheSelf() then
+					if GetChild(Npcs, "The Self", "First") then
+						local TheSelfNPC = GetChild(Npcs, "The Self", "First")
+
+						HumanoidRootPart.CFrame = TheSelfNPC:GetPivot()
+
+						repeat task.wait(0.5)
+							Dialogue:FireServer(TheSelfNPC, "Yes.")
+						until not GetChild(Npcs, "The Self", "First") or not AutoMeditation
+					end
+				elseif GetChild(Map, "MeditationArena", "First") and FindTheSelf() then
+					if not HumanoidRootPart:FindFirstChild("LinearVelocity") then
+						MeditationFall = Instance.new("LinearVelocity",HumanoidRootPart)
+						MeditationFall.ForceLimitsEnabled = false
+						MeditationFall.Attachment0 = HumanoidRootPart:WaitForChild("RootAttachment")
+					else
+						local FoundTheSelfMob = FindTheSelf()
+
+						repeat task.wait()
+							if FoundTheSelfMob then
+								if FoundTheSelfMob.Humanoid.Health > 0 or GetDistance(FoundTheSelfMob:GetPivot() * AttackMode, HumanoidRootPart) < 20 then
+									NearestMob = true
+								elseif not FoundTheSelfMob or FoundTheSelfMob.Humanoid.Health <= 0 or GetDistance(FoundTheSelfMob:GetPivot() * AttackMode, HumanoidRootPart) > 20 then
+									NearestMob = false
+								end
+
+								HumanoidRootPart.CFrame = FoundTheSelfMob:GetPivot() * AttackMode
+							end
+						until not AutoMeditation or not FoundTheSelfMob or not FoundTheSelfMob.Parent or not FoundTheSelfMob:IsDescendantOf(workspace) or FoundTheSelfMob.Humanoid.Health <= 0 or Humanoid.Health <= 0
+						MeditationFall:Destroy()
+					end
+				end
+				if AutoMeditation == false then
+					if MeditationFall then
+						MeditationFall:Destroy()
+					end
 				end
 			end
-			if AutoMeditation == false then
-				if MeditationFall then
-					MeditationFall:Destroy()
-				end
-			end
-		end
 		end)
 	end,
 }, "Stand_AutoMeditation")
@@ -758,11 +758,11 @@ Settings_AutoM1 = SettingsGroupbox:CreateToggle({
 	Callback = function(Value)
 		AutoM1 = Value
 		task.spawn(function()
-		while AutoM1 do task.wait()
-			if NearestMob then
-				M1:FireServer(true, true)
-			end 
-		end
+			while AutoM1 do task.wait()
+				if NearestMob and not Voided then
+					M1:FireServer(true, true)
+				end 
+			end
 		end)
 	end,
 }, "Settings_AutoM1")
@@ -774,33 +774,33 @@ Settings_VoidRaid = SettingsGroupbox:CreateToggle({
 	Callback = function(Value)
 		VoidRaid = Value
 		task.spawn(function()
-		while VoidRaid do task.wait()
-			local FoundRaidBoss = FindRaidBoss()
-			if FoundRaidBoss then
-						if not VoidStart then
-							local IFrame = FoundRaidBoss:FindFirstChild("IFrame")
-							if IFrame and IFrame:IsA("Folder") then
-								VoidStart = tick()
-							end
+			while VoidRaid do task.wait()
+				local FoundRaidBoss = FindRaidBoss()
+				if FoundRaidBoss then
+					if not VoidStart then
+						local IFrame = FoundRaidBoss:FindFirstChild("IFrame")
+						if IFrame and IFrame:IsA("Folder") then
+							VoidStart = tick()
 						end
+					end
 
-						if VoidStart and not Voided and tick() - VoidStart > 20 then
-							NearestMob = false
-							DoingSkill = true
-							Voided = true
-							task.wait(0.5)
+					if VoidStart and not Voided and tick() - VoidStart > 20 then
+						NearestMob = false
+						DoingSkill = true
+						Voided = true
+						task.wait(0.5)
 
-							Skill:FireServer("X", true)
-							task.wait(2)
-							Skill:FireServer("X", true)
-							task.wait(1)
+						Skill:FireServer("X", true)
+						task.wait(2)
+						Skill:FireServer("X", true)
+						task.wait(1)
 
-							Voiding = true
-						end
-			else
-				Voiding = false
+						Voiding = true
+					end
+				else
+					Voiding = false
+				end
 			end
-		end
 		end)
 	end,
 }, "Settings_VoidRaid")
@@ -812,11 +812,11 @@ Settings_AutoM2 = SettingsGroupbox:CreateToggle({
 	Callback = function(Value)
 		AutoM2 = Value
 		task.spawn(function()
-		while AutoM2 do task.wait()
-			if NearestMob then
-				M2:FireServer(true, true)
-			end 
-		end
+			while AutoM2 do task.wait()
+				if NearestMob then
+					M2:FireServer(true, true)
+				end 
+			end
 		end)
 	end,
 }, "Settings_AutoM2")
@@ -841,14 +841,14 @@ Settings_AutoSkills = SettingsGroupbox:CreateToggle({
 	Callback = function(Value)
 		AutoSkills = Value
 		task.spawn(function()
-		while AutoSkills do task.wait()
-			if NearestMob and not VoidRaid then
-				for _, v in ipairs(SelectedSkills) do
-					Skill:FireServer(v, true)
-					task.wait(0.5)
-				end
-			end 
-		end
+			while AutoSkills do task.wait()
+				if NearestMob and not VoidRaid then
+					for _, v in ipairs(SelectedSkills) do
+						Skill:FireServer(v, true)
+						task.wait(0.5)
+					end
+				end 
+			end
 		end)
 	end,
 }, "Settings_AutoSkills")
@@ -928,28 +928,28 @@ Shop_AutoSellAccessories = ShopGroupbox:CreateToggle({
 	Callback = function(Value)
 		AutoSellAccessories = Value
 		task.spawn(function()
-		while AutoSellAccessories do task.wait()
-			local LiveInventory = GetInventory()
+			while AutoSellAccessories do task.wait()
+				local LiveInventory = GetInventory()
 
-			for _, item in ipairs(LiveInventory) do
-				if item.ID and CheckTable(SelectedSellAccessories, item.Name) then
-					if not CheckIgnoredPips(item.Pips, SelectedIgnoreWithPips) then
-						local args = {
-							{
+				for _, item in ipairs(LiveInventory) do
+					if item.ID and CheckTable(SelectedSellAccessories, item.Name) then
+						if not CheckIgnoredPips(item.Pips, SelectedIgnoreWithPips) then
+							local args = {
 								{
-									ID = item.ID,
-									Pips = item.Pips,
-									Name = item.Name,
-									duplicates = 1
+									{
+										ID = item.ID,
+										Pips = item.Pips,
+										Name = item.Name,
+										duplicates = 1
+									}
 								}
 							}
-						}
-						SellItem:FireServer(unpack(args))
-						task.wait(0.2) 
+							SellItem:FireServer(unpack(args))
+							task.wait(0.2) 
+						end
 					end
 				end
 			end
-		end
 		end)
 	end,
 }, "Shop_AutoSellAccessories")
@@ -983,18 +983,18 @@ Item_AutoOpenChests = ItemGroupbox:CreateToggle({
 	Callback = function(Value)
 		AutoOpenChests = Value
 		task.spawn(function()
-		while AutoOpenChests do task.wait()
-			for _, chest in ipairs(SelectedChests) do
-				local args = {
-					chest,
-					{
-						UseAll = true
+			while AutoOpenChests do task.wait()
+				for _, chest in ipairs(SelectedChests) do
+					local args = {
+						chest,
+						{
+							UseAll = true
+						}
 					}
-				}
-				UseItem:FireServer(unpack(args))
-				task.wait(0.5)
+					UseItem:FireServer(unpack(args))
+					task.wait(0.5)
+				end
 			end
-		end
 		end)
 	end,
 }, "Item_AutoOpenChests")
