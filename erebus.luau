@@ -603,11 +603,11 @@ Farm_AutoRaid = FarmGroupbox:CreateToggle({
 								-- Fire the skill at 15.5 seconds (simulates the 0.5s wait)
 								if VoidStart and not Voided and tick() - VoidStart > 10.5 then
 									Voided = true
-									Skill:FireServer("Z", true)
+									Skill:FireServer("V", true)
 								end
 
 								-- Trigger actual void drop at 17.5 seconds (simulates the 2s wait)
-								if VoidStart and tick() - VoidStart > 12.5 then
+								if VoidStart and tick() - VoidStart > 13.5 then
 									Voiding = true
 								end
 
