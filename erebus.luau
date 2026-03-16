@@ -587,38 +587,39 @@ Farm_AutoRaid = FarmGroupbox:CreateToggle({
 						local LastSkill = tick()
 						local Voided = false
 						local Voiding = false
+						local DoingSkill = false
 
 						repeat task.wait()
 							if FoundRaidBoss and FoundRaidBoss:FindFirstChild("Humanoid") then
 								local BossHumanoid = FoundRaidBoss.Humanoid
 
-if VoidRaid then
-								if not VoidStart then
-									local IFrame = FoundRaidBoss:FindFirstChild("IFrame")
-									if IFrame and IFrame:IsA("Folder") then
-										VoidStart = tick()
+								if VoidRaid then
+									if not VoidStart then
+										local IFrame = FoundRaidBoss:FindFirstChild("IFrame")
+										if IFrame and IFrame:IsA("Folder") then
+											VoidStart = tick()
+										end
 									end
-								end
 
-								if VoidStart and not Voided and tick() - VoidStart > 20 then
+									if VoidStart and not Voided and tick() - VoidStart > 20 then
 										Voided = true
 										DoingSkill = true
 										NearestMob = false
-									Skill:FireServer("X", true)
-								end
+										Skill:FireServer("X", true)
+									end
 
-								if VoidStart and not Voided and tick() - VoidStart > 22 then
+									if VoidStart and not Voided and tick() - VoidStart > 22 then
 										Voided = true
 										DoingSkill = true
 										NearestMob = false
-									Skill:FireServer("X", true)
-								end
+										Skill:FireServer("X", true)
+									end
 
 									if VoidStart and tick() - VoidStart > 23 then
 										DoingSkill = true
 										NearestMob = false
-									Voiding = true
-								end
+										Voiding = true
+									end
 								end
 
 								if Voiding then
