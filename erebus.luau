@@ -364,7 +364,7 @@ local VoidList = {
 	},
 	["The World"] = {
 		Ability1 = "V",
-		Wait1 = 2,
+		Wait1 = 3,
 		Ability2 = "V",
 		Wait2 = 0
 	},
