@@ -847,7 +847,7 @@ Settings_AutoSkills = SettingsGroupbox:CreateToggle({
 		AutoSkills = Value
 		task.spawn(function()
 			while AutoSkills do task.wait()
-				if NearestMob and not Voided and not Voiding then
+				if NearestMob and not VoidStart then
 					for _, v in ipairs(SelectedSkills) do
 						Skill:FireServer(v, true)
 						task.wait(0.5)
