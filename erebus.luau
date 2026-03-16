@@ -603,8 +603,8 @@ Farm_AutoRaid = FarmGroupbox:CreateToggle({
 									Voided = true
 									task.wait(0.5)
 
-									Skill:FireServer("V", true)
-									task.wait(1)
+									Skill:FireServer("Z", true)
+									task.wait(3)
 
 									Voiding = true
 								end
