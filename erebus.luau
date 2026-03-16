@@ -573,7 +573,7 @@ Farm_AutoRaid = FarmGroupbox:CreateToggle({
 						if GetDistance(RaidsList[SelectedRaid].Position, HumanoidRootPart) > 10 then
 							HumanoidRootPart.CFrame = RaidsList[SelectedRaid].Position
 						elseif GetChild(Npcs, RaidsList[SelectedRaid].NPC, "First") and GetChild(GetChild(Npcs, RaidsList[SelectedRaid].NPC, "First"), "HumanoidRootPart", "First") then
-							repeat task.wait(0.5)
+							repeat task.wait(1)
 								Dialogue:FireServer(GetChild(Npcs, RaidsList[SelectedRaid].NPC, "First"), "Raid.")
 								HumanoidRootPart.CFrame = RaidsList[SelectedRaid].Position
 							until not AutoRaid or game.PlaceId == RaidID
