@@ -287,7 +287,6 @@ if game.PlaceId == RaidID then
 end
 
 local VoidStart = nil
-local LastSkill = tick()
 local Voided = false
 local Voiding = false
 local DoingSkill = false
@@ -361,12 +360,6 @@ local VoidList = {
 		Wait1 = 2,
 		Ability2 = "X",
 		Wait2 = 1
-	},
-	["The World"] = {
-		Ability1 = "V",
-		Wait1 = 3,
-		Ability2 = "V",
-		Wait2 = 0
 	},
 }
 
@@ -609,11 +602,9 @@ Farm_AutoRaid = FarmGroupbox:CreateToggle({
 									local BossHumanoid = FoundRaidBoss.Humanoid
 
 									if Voiding then
-										NearestMob = false
 										HumanoidRootPart.CFrame = CFrame.new(0, -477, 0)
 									elseif DoingSkill then
-										NearestMob = false
-										HumanoidRootPart.CFrame = FoundRaidBoss:GetPivot() * (CFrame.new(0, -8, 0) * CFrame.Angles(math.rad(90), 0, 0))
+										HumanoidRootPart.CFrame = FoundRaidBoss:GetPivot() * (CFrame.new(0, 6.5, 0) * CFrame.Angles(math.rad(-90), 0, 0))
 									else
 										if BossHumanoid.Health > 0 or GetDistance(FoundRaidBoss:GetPivot() * AttackMode, HumanoidRootPart) < 20 then
 											NearestMob = true
@@ -817,7 +808,10 @@ Settings_VoidRaid = SettingsGroupbox:CreateToggle({
 						DoingSkill = false
 					end
 				else
+					VoidStart = nil
+					Voided = false
 					Voiding = false
+					DoingSkill = false
 				end
 			end
 		end)
