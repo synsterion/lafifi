@@ -598,13 +598,6 @@ Farm_AutoRaid = FarmGroupbox:CreateToggle({
 										VoidStart = tick()
 									end
 								end
-
-								if not Voiding and tick() - LastSkill > 8 then
-									Skill:FireServer("R", true)
-									task.wait(0.5)
-									Skill:FireServer("X", true)
-									LastSkill = tick()
-								end
 								
 								if VoidStart and not Voided and tick() - VoidStart > 10 then
 									Voided = true
