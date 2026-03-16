@@ -613,7 +613,7 @@ Farm_AutoRaid = FarmGroupbox:CreateToggle({
 										HumanoidRootPart.CFrame = CFrame.new(0, -477, 0)
 									elseif DoingSkill then
 										NearestMob = false
-										HumanoidRootPart.CFrame = FoundRaidBoss:GetPivot() * (CFrame.new(0, -6, 0) * CFrame.Angles(math.rad(90), 0, 0))
+										HumanoidRootPart.CFrame = FoundRaidBoss:GetPivot() * (CFrame.new(0, -8, 0) * CFrame.Angles(math.rad(90), 0, 0))
 									else
 										if BossHumanoid.Health > 0 or GetDistance(FoundRaidBoss:GetPivot() * AttackMode, HumanoidRootPart) < 20 then
 											NearestMob = true
