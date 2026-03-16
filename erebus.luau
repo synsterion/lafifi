@@ -593,6 +593,7 @@ Farm_AutoRaid = FarmGroupbox:CreateToggle({
 							if FoundRaidBoss and FoundRaidBoss:FindFirstChild("Humanoid") then
 								local BossHumanoid = FoundRaidBoss.Humanoid
 
+if VoidRaid then
 								if not VoidStart then
 									local IFrame = FoundRaidBoss:FindFirstChild("IFrame")
 									if IFrame and IFrame:IsA("Folder") then
@@ -600,34 +601,28 @@ Farm_AutoRaid = FarmGroupbox:CreateToggle({
 									end
 								end
 
-								-- Fire the skill at 15.5 seconds (simulates the 0.5s wait)
 								if VoidStart and not Voided and tick() - VoidStart > 10.5 then
 									Voided = true
-									Skill:FireServer("R", true)
+									Skill:FireServer("X", true)
 								end
 
-								-- Fire the skill at 15.5 seconds (simulates the 0.5s wait)
-								if VoidStart and not Voided and tick() - VoidStart > 11.5 then
+								if VoidStart and not Voided and tick() - VoidStart > 12.5 then
 									Voided = true
-									Skill:FireServer("R", true)
+									Skill:FireServer("X", true)
 								end
 
-								-- Trigger actual void drop at 17.5 seconds (simulates the 2s wait)
-								if VoidStart and tick() - VoidStart > 12.5 then
+								if VoidStart and tick() - VoidStart > 13.5 then
 									Voiding = true
 								end
+								end
 
-								-- CFrame Positioning Logic
 								if Voiding then
-									-- Phase 3: Dropping into the void
 									NearestMob = false
 									HumanoidRootPart.CFrame = CFrame.new(0, -477, 0)
 								elseif VoidStart and tick() - VoidStart > 10 then
-									-- Phase 2: The 2.5-second window where you TP behind the boss to cast
 									NearestMob = false
 									HumanoidRootPart.CFrame = FoundRaidBoss:GetPivot() * CFrame.new(0, 0, 7)
 								else
-									-- Phase 1: Normal combat positioning
 									if BossHumanoid.Health > 0 or GetDistance(FoundRaidBoss:GetPivot() * AttackMode, HumanoidRootPart) < 20 then
 										NearestMob = true
 									else
