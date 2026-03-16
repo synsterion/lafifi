@@ -792,7 +792,7 @@ Settings_VoidRaid = SettingsGroupbox:CreateToggle({
 	Callback = function(Value)
 		VoidRaid = Value
 		task.spawn(function()
-			while VoidRaid do task.wait(0.1)
+			while VoidRaid do task.wait()
 				local FoundRaidBoss = FindRaidBoss()
 				if FoundRaidBoss then
 					if not VoidStart then
@@ -802,7 +802,7 @@ Settings_VoidRaid = SettingsGroupbox:CreateToggle({
 						end
 					end
 
-					if VoidStart and not Voided and tick() - VoidStart > 10 then
+					if VoidStart and not Voided and tick() - VoidStart > 15 then
 						NearestMob = false
 						DoingSkill = true
 						Voided = true
